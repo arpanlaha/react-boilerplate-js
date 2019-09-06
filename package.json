@@ -1,5 +1,5 @@
 {
-  "name": "react-boilerplate",
+  "name": "react-boilerplate-js",
   "version": "0.1.0",
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
@@ -12,17 +12,15 @@
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.1",
     "redux": "^4.0.1",
-    "redux-devtools-extension": "^2.13.8",
-    "typescript": "^3.6.2"
+    "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
     "build": "next build",
     "dev": "next",
-    "format": "prettier --write \"./**/*.{js,ts,tsx,json,md}\"",
-    "format:check": "prettier --write \"./**/*.{js,ts,tsx,json,md}\"",
-    "lint": "eslint \"./**/*.{js,ts,tsx}\" && markdownlint README.md",
-    "start": "next start",
-    "typecheck": "tsc"
+    "format": "prettier --write \"./**/*.{js,jsx,json,md}\"",
+    "format:check": "prettier --write \"./**/*.{js,jsx,json,md}\"",
+    "lint": "eslint \"./**/*.{js,jsx}\" && markdownlint README.md",
+    "start": "next start"
   },
   "browserslist": [
     ">0.2%",
@@ -31,12 +29,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@h4iuiuc/eslint-plugin": "^1.0.6",
-    "@types/node": "^12.7.4",
-    "@types/react": "^16.9.2",
-    "@types/react-redux": "^7.1.2",
+    "@h4iuiuc/eslint-plugin": "^1.0.8",
     "eslint": "^6.3.0",
     "markdownlint-cli": "^0.18.0",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.2"
   }
 }
