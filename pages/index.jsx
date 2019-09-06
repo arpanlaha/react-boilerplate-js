@@ -2,15 +2,11 @@
  * @file The home page.
  */
 
-import React, { ChangeEvent, Component, Props, ReactNode } from "react";
-
+import React, { Component } from "react";
 import { Example, Head, LoadWrapper } from "../components";
-
-import { bindActionCreators, Dispatch } from "redux";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { setExample } from "../redux/actions";
-import { ReducerState } from "../redux/reducer";
-
 import "../static/style.scss";
 
 /**
@@ -18,7 +14,7 @@ import "../static/style.scss";
  * @param state the Redux state.
  * @returns the fetched state props.
  */
-const mapStateToProps = (state: ReducerState): AppReduxStateProps => ({
+const mapStateToProps = state => ({
   example: state.example
 });
 
@@ -27,42 +23,8 @@ const mapStateToProps = (state: ReducerState): AppReduxStateProps => ({
  * @param dispatch the Redux dispatch.
  * @returns the fetched action props.
  */
-const mapDispatchToProps = (dispatch: Dispatch): AppReduxActionProps =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators({ setExample }, dispatch);
-
-/**
- * App props derived from mapStateToProps
- * @property example - a string
- */
-interface AppReduxStateProps {
-  example: string;
-}
-
-/**
- * App props derived from mapDispatchToProps
- * @property setExample - an action setting example
- */
-interface AppReduxActionProps {
-  setExample: (example: string) => void;
-}
-
-/**
- * The props belonging to App, extending AppReduxStateProps and AppReduxActionProps
- */
-interface AppProps
-  extends Props<Component>,
-    AppReduxStateProps,
-    AppReduxActionProps {}
-
-/**
- * THe state of the App.
- * @property newExample - the inputted new example.
- * @Propert message - the loaded message.
- */
-interface AppState {
-  newExample: string;
-  message: string | null;
-}
 
 /**
  * The home page.
@@ -71,8 +33,8 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  class App extends Component<AppProps, AppState> {
-    constructor(props: AppProps) {
+  class App extends Component {
+    constructor(props) {
       super(props);
       this.state = {
         newExample: this.props.example,
@@ -84,7 +46,7 @@ export default connect(
      * Called when the input text changes.
      * Sets this.state.newExample to the inputted text.
      */
-    updateExample = (event: ChangeEvent<HTMLInputElement>): void => {
+    updateExample = event => {
       this.setState({ newExample: event.target.value });
     };
 
@@ -92,17 +54,17 @@ export default connect(
      * Called when the submit button is clicked.
      * Passes in the current value of this.state.newExample to this.props.setExample.
      */
-    handleSubmit = (): void => this.props.setExample(this.state.newExample);
+    handleSubmit = () => this.props.setExample(this.state.newExample);
 
     /**
      * An example function for loading data.
      */
-    loadMessage = async (): Promise<void> => {
+    loadMessage = async () => {
       /**
        * A helper method for sleeping for a designated length of time time.
        * @param ms the milliseconds to sleep for.
        */
-      function sleep(ms: number): Promise<any> {
+      function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       const timeOut = 2000;
@@ -113,7 +75,7 @@ export default connect(
     /**
      * Renders the component.
      */
-    render(): ReactNode {
+    render() {
       return (
         <div className="App">
           <Head />

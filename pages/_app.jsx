@@ -2,44 +2,28 @@
  * @file Configuring page initialization.
  */
 
-import React, { ErrorInfo } from "react";
-
-import App, { AppContext, AppInitialProps } from "next/app";
-
-import { Store } from "redux";
+import React from "react";
+import App from "next/app";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import { initializeStore } from "../redux/store";
-
-// @ts-ignore @types/next-page-transitions does not exist
 import { PageTransition } from "next-page-transitions";
-
-/**
- * Props with a Redux store
- * @property store
- */
-interface PropsWithRedux extends AppInitialProps {
-  store: Store;
-}
 
 /**
  * Injects Redux functionality into the app.
  */
-export default withRedux(initializeStore as any)(
+export default withRedux(initializeStore)(
   /**
    * Wraps the default Next app.
    */
-  class WrappedApp extends App<PropsWithRedux> {
+  class WrappedApp extends App {
     /**
      * Fetches initial props.
      * @param Component the component being rendered.
      * @param ctx the Next page context.
      * @returns the app's initial props.
      */
-    static async getInitialProps({
-      Component,
-      ctx
-    }: AppContext): Promise<AppInitialProps> {
+    static async getInitialProps({ Component, ctx }) {
       return {
         pageProps: {
           // Call page-level getInitialProps
@@ -55,7 +39,7 @@ export default withRedux(initializeStore as any)(
      * @param error the caught error.
      * @param errorInfo information about the caught Error.
      */
-    componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    componentDidCatch(error, errorInfo) {
       console.error("Page Error Boundary: ", error);
       super.componentDidCatch(error, errorInfo);
     }
@@ -63,7 +47,7 @@ export default withRedux(initializeStore as any)(
     /**
      * Renders the app.
      */
-    render(): JSX.Element {
+    render() {
       const { Component, pageProps, store } = this.props;
       return (
         <Provider store={store}>

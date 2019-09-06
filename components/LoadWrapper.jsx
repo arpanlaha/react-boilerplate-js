@@ -2,8 +2,7 @@
  * @file A wrapper component for rendering data that needs to be loaded.
  */
 
-import { Component, Props, ReactNode } from "react";
-
+import { Component } from "react";
 /**
  * The possible statuses of this.props.loadFunction.
  * @member INITIAL
@@ -11,44 +10,20 @@ import { Component, Props, ReactNode } from "react";
  * @member RESOLVED
  * @member ERROR
  */
-enum LoadState {
-  INITIAL = "INITIAL",
-  LOADING = "LOADING",
-  RESOLVED = "RESOLVED",
-  ERROR = "ERROR"
-}
 
-/**
- * The possible props passed to LoadWrapper.
- * @property loadFunction - the async function being loaded.
- * @property loadState - the optional ReactNode to be rendered while loadFunction is loading.
- * @property resolvedState - the ReactNode to be rendered once loadFunction resolves.
- * @property errorState - the optional ReactNode to be rendered if loadFunction throws an Error.
- *
- */
-interface LoaderProps extends Props<Component> {
-  loadFunction: (...args: any[]) => Promise<void>;
-  loadState?: ReactNode;
-  resolvedState: ReactNode;
-  errorState?: ReactNode;
-}
-
-/**
- * Internal state of the Loader.
- * @property loadState - a LoadState corresponding to the current status of this.props.loadFunction.
- * @property error - the caught Error, if any.
- */
-interface LoaderState {
-  loadState: LoadState;
-  error: Error | null;
-}
+const LoadState = {
+  INITIAL: "INITIAL",
+  LOADING: "LOADING",
+  RESOLVED: "RESOLVED",
+  ERROR: "ERROR"
+};
 
 /**
  * Wraps loading functionality.
  * Displays specified state after calling this.props.loadFunction, with options for custom loading and error states.
  */
-export default class LoadWrapper extends Component<LoaderProps, LoaderState> {
-  constructor(props: LoaderProps) {
+export default class LoadWrapper extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       loadState: LoadState.INITIAL,
@@ -60,7 +35,7 @@ export default class LoadWrapper extends Component<LoaderProps, LoaderState> {
    * Called immediately after the component is inserted into the DOM tree.
    * Calls this.props.loadFunction and manages this.state.loadState.
    */
-  async componentDidMount(): Promise<void> {
+  async componentDidMount() {
     this.setState({ loadState: LoadState.LOADING });
     try {
       await this.props.loadFunction();
@@ -73,7 +48,7 @@ export default class LoadWrapper extends Component<LoaderProps, LoaderState> {
   /**
    * Renders the component.
    */
-  render(): ReactNode {
+  render() {
     switch (this.state.loadState) {
       case LoadState.INITIAL: {
         return null;

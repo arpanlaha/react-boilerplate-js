@@ -2,20 +2,12 @@
  * @file Defining the the Redux state and reducer.
  */
 
-import { Action, ActionTypes } from "./actions";
-
-/**
- * The state managed by the reducer.
- * @property example - a string.
- */
-export interface ReducerState {
-  example: string;
-}
+import { ActionTypes } from "./actions";
 
 /**
  * The initial state fed into the reducer.
  */
-export const initialState: ReducerState = {
+export const initialState = {
   example: "example"
 };
 
@@ -25,10 +17,7 @@ export const initialState: ReducerState = {
  * @param action the incoming action.
  * @returns the new state.
  */
-export const reducer = (
-  state: ReducerState = initialState,
-  action: Action
-): ReducerState => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_EXAMPLE:
       return {

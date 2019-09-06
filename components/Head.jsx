@@ -2,30 +2,17 @@
  * @file A modular extension to Next's Head component.
  */
 
-import React, { Component, Props, ReactNode } from "react";
-
+import React, { Component } from "react";
 import NextHead from "next/head";
-
-/**
- * The possible props passed to Head.
- * @property title - a string.
- * @property description - a string.
- * @property keyword - a string containing comma-separated values.
- */
-interface HeadProps extends Props<Component> {
-  title?: string;
-  description?: string;
-  keywords?: string;
-}
 
 /**
  * Injects information into the <head> tag.
  */
-export default class Head extends Component<HeadProps> {
+export default class Head extends Component {
   /**
    * Renders the component.
    */
-  render(): ReactNode {
+  render() {
     return (
       <NextHead>
         <meta charSet="UTF-8" />
